@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f47721">
+  <title>آریو تی‌وی | ARIO TV</title>
+  <meta name="description" content="آریو تی‌وی؛ داشبورد ساده و سریع برای دسترسی مستقیم به وب‌سایت‌ها و منابع پخش زنده">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+    :root {
+      --orange:#f47721; --orange-dark:#df6416; --orange-soft:#fff0e5;
+      --bg:#f5f6f8; --surface:rgba(255,255,255,.82); --solid:#fff;
+      --text:#20232a; --muted:#747b87; --line:rgba(28,35,45,.09);
+      --shadow:0 12px 34px rgba(28,35,45,.07); --focus:0 0 0 3px rgba(244,119,33,.25);
+      --radius:22px;
+    }
+    body.dark {
+      --bg:#11151b; --surface:rgba(31,38,48,.86); --solid:#202731;
+      --text:#f2f4f7; --muted:#aab2bf; --line:rgba(255,255,255,.09);
+      --orange-soft:#442a1b; --shadow:0 12px 34px rgba(0,0,0,.24);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Vazirmatn",Tahoma,sans-serif;min-height:100vh;transition:background .2s,color .2s}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .app-shell{width:min(1500px,100%);margin:auto;padding:24px clamp(16px,3vw,42px) 48px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 18px;background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);position:sticky;top:12px;z-index:10}
+    .brand{display:flex;align-items:center;gap:12px;min-width:190px}
+    .brand-mark{width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#ff9b4e,var(--orange-dark));display:grid;place-items:center;color:white;font-weight:800;font-size:20px;box-shadow:0 7px 18px #f4772138}
+    .brand-name{font-size:18px;font-weight:800;line-height:1.2}.brand-en{font-size:10px;letter-spacing:2px;color:var(--muted);direction:ltr;text-align:right}
+    .top-actions{display:flex;align-items:center;gap:10px}
+    .clock{font-size:13px;color:var(--muted);white-space:nowrap}
+    .icon-btn,.btn{border:1px solid var(--line);background:var(--solid);color:var(--text);border-radius:14px;padding:10px 14px;transition:.18s ease}
+    .icon-btn{width:42px;height:42px;display:grid;place-items:center;font-size:18px;padding:0}
+    .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+    .btn:hover,.icon-btn:hover{transform:translateY(-2px);border-color:var(--orange)}
+    button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:none;box-shadow:var(--focus)}
+    .hero{margin:30px 0 24px;padding:clamp(22px,4vw,42px);border-radius:30px;background:radial-gradient(circle at 8% 15%,#ffbf8a55,transparent 34%),linear-gradient(120deg,var(--solid),var(--orange-soft));border:1px solid var(--line);position:relative;overflow:hidden}
+    .hero:after{content:"";position:absolute;width:210px;height:210px;border:1px solid #f4772125;border-radius:50%;left:7%;top:-110px;box-shadow:0 0 0 25px #f4772108,0 0 0 55px #f4772106}
+    .eyebrow{color:var(--orange-dark);font-size:12px;font-weight:800;letter-spacing:.5px}
+    h1{font-size:clamp(25px,4vw,42px);margin:8px 0 10px;line-height:1.45}
+    .hero p{color:var(--muted);margin:0;max-width:650px;font-size:14px;line-height:2}
+    .hero-search{margin-top:24px;max-width:600px;display:flex;gap:10px;position:relative;z-index:1}
+    .search-wrap{flex:1;position:relative}
+    .search-wrap input{width:100%;height:48px;padding:0 44px 0 14px;border:1px solid var(--line);border-radius:15px;background:var(--solid);color:var(--text);outline:none}
+    .search-symbol{position:absolute;right:15px;top:12px;color:var(--muted)}
+    .section{margin:28px 0}
+    .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+    .section-title{font-size:19px;font-weight:800;margin:0}
+    .section-sub{font-size:12px;color:var(--muted);margin-top:3px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+    .tab{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:8px 15px;border-radius:999px;font-size:12px}
+    .tab.active{background:var(--orange-soft);color:var(--orange-dark);border-color:#f4772145;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px}
+    .site-card{background:var(--surface);border:1px solid var(--line);border-radius:21px;padding:17px;text-align:right;min-height:150px;display:flex;flex-direction:column;gap:12px;box-shadow:0 5px 18px rgba(20,25,35,.025);transition:transform .18s,border-color .18s,box-shadow .18s;position:relative}
+    .site-card:hover{transform:translateY(-4px);border-color:#f4772170;box-shadow:var(--shadow)}
+    .card-top{display:flex;justify-content:space-between;align-items:center}
+    .site-icon{width:44px;height:44px;border-radius:15px;background:var(--orange-soft);color:var(--orange-dark);display:grid;place-items:center;font-size:16px;font-weight:800;direction:ltr}
+    .site-title{font-weight:800;font-size:15px}.site-desc{font-size:11px;color:var(--muted);margin-top:3px}
+    .card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
+    .domain{font-size:10px;color:var(--muted);direction:ltr;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .card-actions{display:flex;gap:5px}
+    .mini-btn{border:0;background:transparent;color:var(--muted);border-radius:9px;width:30px;height:30px;font-size:16px}
+    .mini-btn:hover{background:var(--orange-soft);color:var(--orange-dark)}
+    .empty{padding:25px;border:1px dashed var(--line);border-radius:18px;color:var(--muted);text-align:center;font-size:13px;grid-column:1/-1}
+    .feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .feature{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;display:flex;gap:15px;align-items:center;min-height:112px}
+    .feature-icon{width:48px;height:48px;flex:0 0 48px;border-radius:16px;background:var(--orange-soft);display:grid;place-items:center;font-size:22px}
+    .feature h3{font-size:15px;margin:0 0 5px}.feature p{font-size:11px;color:var(--muted);margin:0;line-height:1.8}
+    .feature .btn{margin-right:auto;white-space:nowrap;font-size:12px}
+    .footer{border-top:1px solid var(--line);padding:22px 4px 0;margin-top:40px;display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:11px}
+    .view{display:none}.view.active{display:block;animation:appear .2s ease}
+    @keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .page-head{display:flex;align-items:center;gap:12px;margin:28px 0 20px}
+    .back-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:13px;padding:9px 13px}
+    .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:14px}
+    .panel h3{font-size:15px;margin:0 0 14px}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .field{display:flex;flex-direction:column;gap:7px}.field label{font-size:12px;color:var(--muted)}
+    .field input,.field select{width:100%;height:44px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--solid);color:var(--text);outline:none}
+    .form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+    .setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 0;border-bottom:1px solid var(--line)}
+    .setting-row:last-child{border:0}.setting-row strong{font-size:13px}.setting-row small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#222832;color:#fff;padding:11px 17px;border-radius:13px;font-size:12px;opacity:0;pointer-events:none;transition:.25s;z-index:30;max-width:90%;text-align:center}
+    .toast.show{opacity:1;transform:translate(-50%,0)}
+    .modal-backdrop{position:fixed;inset:0;background:#10151c77;display:none;place-items:center;padding:18px;z-index:40}
+    .modal-backdrop.show{display:grid}
+    .modal{width:min(500px,100%);background:var(--solid);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+    .modal h2{font-size:18px;margin:0 0 17px}.modal .form-grid{grid-template-columns:1fr}
+    .modal-actions{display:flex;justify-content:flex-start;gap:8px;margin-top:16px}
+    .hint{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}
+    .hidden{display:none!important}
+    @media(max-width:700px){.app-shell{padding:12px 13px 30px}.topbar{top:6px;padding:11px 12px}.brand{min-width:0}.clock{display:none}.hero{margin-top:18px}.feature-grid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.site-card{padding:13px;min-height:145px}.section-title{font-size:17px}.footer{flex-direction:column}.form-grid{grid-template-columns:1fr}}
+    @media(max-width:390px){.grid{grid-template-columns:1fr}.hero-search{flex-direction:column}.hero-search .btn{width:100%}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">A</div>
+      <div><div class="brand-name">آریو تی‌وی</div><div class="brand-en">ARIO TV</div></div>
+    </div>
+    <div class="top-actions">
+      <div class="clock" id="clock" aria-live="off">...</div>
+      <button class="icon-btn" id="themeQuick" title="تغییر پوسته" aria-label="تغییر پوسته">☾</button>
+      <button class="icon-btn" id="settingsQuick" title="تنظیمات" aria-label="تنظیمات">⚙</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="view active" id="homeView">
+      <div class="hero">
+        <div class="eyebrow">داشبورد هوشمند شما</div>
+        <h1>دنیای سرگرمی، <span style="color:var(--orange)">یک‌جا</span></h1>
+        <p>از آریو تی‌وی برای دسترسی سریع و مستقیم به وب‌سایت‌های موردعلاقه‌ات استفاده کن.</p>
+        <div class="hero-search">
+          <div class="search-wrap"><span class="search-symbol">⌕</span><input id="searchInput" type="search" placeholder="نام برنامه یا وب‌سایت را جستجو کن..." autocomplete="off" aria-label="جستجو"></div>
+          <button class="btn primary" id="searchBtn">جستجو</button>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head"><div><h2 class="section-title">دسترسی سریع</h2><div class="section-sub">میانبرهای منتخب برای شروع</div></div><button class="btn" id="allAppsBtn">همه برنامه‌ها</button></div>
+        <div class="grid" id="quickGrid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><h2 class="section-title">علاقه‌مندی‌ها</h2><div class="section-sub">وب‌سایت‌هایی که ذخیره کرده‌ای</div></div><button class="btn" id="favoritesBtn">مشاهده همه</button></div>
+        <div class="grid" id="favoriteGrid"></div>
+      </section>
+
+      <section class="section" id="recentSection">
+        <div class="section-head"><div><h2 class="section-title">اخیراً بازشده</h2><div class="section-sub">آخرین میانبرهایی که انتخاب کرده‌ای</div></div></div>
+        <div class="grid" id="recentGrid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><h2 class="section-title">تلویزیون زنده</h2><div class="section-sub">دسترسی به منابع معرفی‌شده؛ پخش به شرایط سرویس مقصد وابسته است</div></div></div>
+        <div class="feature-grid">
+          <article class="feature"><div class="feature-icon">📺</div><div><h3>منابع رسمی صداوسیما</h3><p>ورود به وب‌سایت رسمی برای بررسی شبکه‌ها و پخش زنده</p></div><button class="btn primary" data-open-url="https://www.irib.ir/">ورود</button></article>
+          <article class="feature"><div class="feature-icon">▶</div><div><h3>Persian Telebox</h3><p>گزینه تکمیلی برای بررسی دسترسی به شبکه‌های زنده</p></div><button class="btn" data-open-url="https://www.persiantelebox.com/fa/live">ورود</button></article>
+        </div>
+      </section>
+    </section>
+
+    <section class="view" id="appsView">
+      <div class="page-head"><button class="back-btn" data-back>← بازگشت</button><div><h1 style="font-size:25px;margin:0">برنامه‌ها</h1><div class="section-sub">میانبرهای وب‌سایت‌ها</div></div><button class="btn primary" id="addAppBtn" style="margin-right:auto">＋ افزودن سایت</button></div>
+      <div class="tabs" id="categoryTabs"></div>
+      <div class="grid" id="appsGrid"></div>
+    </section>
+
+    <section class="view" id="favoritesView">
+      <div class="page-head"><button class="back-btn" data-back>← بازگشت</button><div><h1 style="font-size:25px;margin:0">علاقه‌مندی‌ها</h1><div class="section-sub">دسترسی‌های ذخیره‌شده</div></div></div>
+      <div class="grid" id="favoritesFullGrid"></div>
+    </section>
+
+    <section class="view" id="settingsView">
+      <div class="page-head"><button class="back-btn" data-back>← بازگشت</button><div><h1 style="font-size:25px;margin:0">تنظیمات</h1><div class="section-sub">شخصی‌سازی آریو تی‌وی</div></div></div>
+      <div class="panel">
+        <h3>ظاهر برنامه</h3>
+        <div class="setting-row"><div><strong>پوسته تیره</strong><small>تغییر بین حالت روشن و تاریک</small></div><button class="btn" id="themeToggle">فعال‌سازی</button></div>
+      </div>
+      <div class="panel">
+        <h3>مدیریت اطلاعات</h3>
+        <div class="setting-row"><div><strong>مدیریت میانبرها</strong><small>افزودن، ویرایش یا حذف وب‌سایت‌ها</small></div><button class="btn" id="manageAppsBtn">مدیریت</button></div>
+        <div class="setting-row"><div><strong>پاک کردن تاریخچه</strong><small>فهرست وب‌سایت‌های اخیراً بازشده حذف می‌شود</small></div><button class="btn" id="clearHistoryBtn">پاک کردن</button></div>
+        <div class="setting-row"><div><strong>بازنشانی برنامه</strong><small>میانبرها و تنظیمات به حالت اولیه برمی‌گردند</small></div><button class="btn" id="resetBtn">بازنشانی</button></div>
+      </div>
+      <div class="panel"><div class="setting-row"><div><strong>نسخه آریو تی‌وی</strong><small>نسخه تک‌فایلی آزمایشی</small></div><span dir="ltr">1.0.0</span></div></div>
+    </section>
+  </main>
+
+  <footer class="footer"><span>ARIO TV · دسترسی ساده به وب</span><span>برای بهترین تجربه، از مرورگر به‌روز استفاده کن.</span></footer>
+</div>
+
+<div class="modal-backdrop" id="appModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h2 id="modalTitle">افزودن وب‌سایت</h2>
+    <form id="appForm">
+      <div class="form-grid">
+        <div class="field"><label for="appName">نام وب‌سایت</label><input id="appName" maxlength="40" required placeholder="مثلاً وب‌سایت من"></div>
+        <div class="field"><label for="appUrl">آدرس کامل</label><input id="appUrl" type="url" required placeholder="https://example.com" dir="ltr"></div>
+        <div class="field"><label for="appCategory">دسته‌بندی</label><select id="appCategory"><option value="video">ویدئو</option><option value="movie">فیلم و سریال</option><option value="music">موسیقی</option><option value="service">خدمات اینترنتی</option><option value="other">سایر</option></select></div>
+        <div class="field"><label for="appDesc">توضیح کوتاه</label><input id="appDesc" maxlength="70" placeholder="اختیاری"></div>
+      </div>
+      <div class="hint">فقط آدرس‌های HTTP و HTTPS پذیرفته می‌شوند. بعضی وب‌سایت‌ها ممکن است روی مرورگر تلویزیون یا در منطقه شما در دسترس نباشند.</div>
+      <div class="modal-actions"><button class="btn primary" type="submit">ذخیره</button><button class="btn" type="button" id="cancelModal">انصراف</button></div>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+  const STORAGE_KEY = "ario-tv-data-v1";
+  const CATEGORIES = [
+    {id:"all",label:"همه"},
+    {id:"movie",label:"فیلم و سریال"},
+    {id:"video",label:"ویدئو"},
+    {id:"music",label:"موسیقی"},
+    {id:"service",label:"خدمات اینترنتی"},
+    {id:"other",label:"سایر"}
+  ];
+  const DEFAULT_APPS = [
+    {id:"aparat",name:"آپارات",url:"https://www.aparat.com/",category:"video",desc:"تماشای ویدئوهای آنلاین",initial:"A",favorite:true,custom:false},
+    {id:"filimo",name:"فیلیمو",url:"https://www.filimo.com/",category:"movie",desc:"فیلم و سریال آنلاین",initial:"F",favorite:false,custom:false},
+    {id:"namasha",name:"نماشا",url:"https://www.namasha.com/",category:"video",desc:"اشتراک‌گذاری ویدئو",initial:"N",favorite:false,custom:false},
+    {id:"telewebion",name:"تلوبیون",url:"https://telewebion.com/",category:"video",desc:"وب‌سایت و آرشیو برنامه‌ها",initial:"T",favorite:false,custom:false},
+    {id:"radiojavan",name:"رادیوجوان",url:"https://www.radiojavan.com/",category:"music",desc:"موسیقی و محتوای صوتی",initial:"RJ",favorite:false,custom:false},
+    {id:"irib",name:"صداوسیما",url:"https://www.irib.ir/",category:"service",desc:"درگاه رسمی سازمان صداوسیما",initial:"IR",favorite:true,custom:false}
+  ];
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  let state = loadState();
+  let activeCategory = "all";
+  let editingId = null;
+  let toastTimer = null;
+
+  function loadState(){
+    const fallback = {apps:DEFAULT_APPS.map(x=>({...x})),history:[],dark:false};
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return fallback;
+      const parsed = JSON.parse(raw);
+      if(!parsed || !Array.isArray(parsed.apps)) return fallback;
+      return {apps:parsed.apps.filter(validStoredApp),history:Array.isArray(parsed.history)?parsed.history.filter(x=>typeof x==="string").slice(0,12):[],dark:!!parsed.dark};
+    } catch { return fallback; }
+  }
+  function validStoredApp(a){
+    return a && typeof a.id==="string" && typeof a.name==="string" && typeof a.url==="string" && safeUrl(a.url) && typeof a.category==="string";
+  }
+  function saveState(){
+    try { localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); }
+    catch { showToast("ذخیره‌سازی در این مرورگر در دسترس نیست."); }
+  }
+  function safeUrl(value){
+    try { const u=new URL(value); return (u.protocol==="https:"||u.protocol==="http:") && !!u.hostname; }
+    catch { return false; }
+  }
+  function normalizeUrl(value){
+    let v=value.trim();
+    if(!/^https?:\/\//i.test(v)) v="https://"+v;
+    return safeUrl(v) ? new URL(v).href : null;
+  }
+  function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function showToast(message){
+    const el=$("#toast"); el.textContent=message; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2600);
+  }
+  function updateClock(){
+    const now=new Date();
+    $("#clock").textContent=new Intl.DateTimeFormat("fa-IR",{weekday:"short",day:"numeric",month:"long",hour:"2-digit",minute:"2-digit"}).format(now);
+  }
+  function applyTheme(){
+    document.body.classList.toggle("dark",state.dark);
+    $("#themeQuick").textContent=state.dark?"☀":"☾";
+    $("#themeToggle").textContent=state.dark?"غیرفعال‌سازی":"فعال‌سازی";
+  }
+  function categoryLabel(id){return CATEGORIES.find(c=>c.id===id)?.label||"سایر";}
+  function appCard(app){
+    const favorite=app.favorite?"★":"☆";
+    return `<article class="site-card" data-card-id="${escapeHTML(app.id)}">
+      <div class="card-top"><div class="site-icon" aria-hidden="true">${escapeHTML(app.initial||app.name.slice(0,1))}</div>
+      <div class="card-actions">
+        <button class="mini-btn" data-action="favorite" data-id="${escapeHTML(app.id)}" aria-label="تغییر علاقه‌مندی" title="علاقه‌مندی">${favorite}</button>
+        ${app.custom?`<button class="mini-btn" data-action="edit" data-id="${escapeHTML(app.id)}" aria-label="ویرایش">✎</button><button class="mini-btn" data-action="delete" data-id="${escapeHTML(app.id)}" aria-label="حذف">×</button>`:""}
+      </div></div>
+      <div><div class="site-title">${escapeHTML(app.name)}</div><div class="site-desc">${escapeHTML(app.desc||categoryLabel(app.category))}</div></div>
+      <div class="card-bottom"><span class="domain">${escapeHTML(new URL(app.url).hostname)}</span><button class="mini-btn" data-action="open" data-id="${escapeHTML(app.id)}" aria-label="باز کردن ${escapeHTML(app.name)}">↗</button></div>
+    </article>`;
+  }
+  function renderGrid(target,apps,message="موردی برای نمایش وجود ندارد."){
+    const el=$(target);
+    el.innerHTML=apps.length?apps.map(appCard).join(""):`<div class="empty">${message}</div>`;
+  }
+  function renderHome(){
+    const apps=state.apps;
+    renderGrid("#quickGrid",apps.slice(0,4));
+    renderGrid("#favoriteGrid",apps.filter(a=>a.favorite).slice(0,4),"هنوز وب‌سایتی به علاقه‌مندی‌ها اضافه نکرده‌ای.");
+    const recent=state.history.map(id=>apps.find(a=>a.id===id)).filter(Boolean);
+    $("#recentSection").classList.toggle("hidden",recent.length===0);
+    renderGrid("#recentGrid",recent,"");
+  }
+  function renderTabs(){
+    $("#categoryTabs").innerHTML=CATEGORIES.map(c=>`<button class="tab ${activeCategory===c.id?"active":""}" data-category="${c.id}">${c.label}</button>`).join("");
+  }
+  function renderApps(){
+    renderTabs();
+    const list=activeCategory==="all"?state.apps:state.apps.filter(a=>a.category===activeCategory);
+    renderGrid("#appsGrid",list,"در این دسته‌بندی وب‌سایتی ثبت نشده است.");
+  }
+  function renderFavorites(){renderGrid("#favoritesFullGrid",state.apps.filter(a=>a.favorite),"هنوز علاقه‌مندی‌ای ثبت نشده است.");}
+  function renderAll(){renderHome();renderApps();renderFavorites();applyTheme();}
+  function showView(id){
+    $$(".view").forEach(v=>v.classList.toggle("active",v.id===id));
+    window.scrollTo({top:0,behavior:"smooth"});
+    if(id==="appsView") renderApps();
+    if(id==="favoritesView") renderFavorites();
+  }
+  function findApp(id){return state.apps.find(a=>a.id===id);}
+  function openApp(app){
+    if(!app || !safeUrl(app.url)){showToast("آدرس این وب‌سایت معتبر نیست.");return;}
+    state.history=[app.id,...state.history.filter(id=>id!==app.id)].slice(0,12);
+    saveState();
+    // Navigate in the current tab as requested. The browser Back button returns to ARIO TV.
+    window.location.href=app.url;
+  }
+  function openExternal(url){
+    if(!safeUrl(url)){showToast("آدرس معتبر نیست.");return;}
+    window.location.href=url;
+  }
+  function toggleFavorite(id){
+    const app=findApp(id);if(!app)return;
+    app.favorite=!app.favorite;saveState();renderAll();
+    showToast(app.favorite?"به علاقه‌مندی‌ها اضافه شد.":"از علاقه‌مندی‌ها حذف شد.");
+  }
+  function deleteApp(id){
+    const app=findApp(id);if(!app||!app.custom)return;
+    if(!confirm(`وب‌سایت «${app.name}» حذف شود؟`))return;
+    state.apps=state.apps.filter(a=>a.id!==id);state.history=state.history.filter(x=>x!==id);
+    saveState();renderAll();showToast("وب‌سایت حذف شد.");
+  }
+  function openModal(app=null){
+    editingId=app?app.id:null;
+    $("#modalTitle").textContent=app?"ویرایش وب‌سایت":"افزودن وب‌سایت";
+    $("#appName").value=app?.name||"";
+    $("#appUrl").value=app?.url||"";
+    $("#appCategory").value=app?.category||"video";
+    $("#appDesc").value=app?.desc||"";
+    $("#appModal").classList.add("show");$("#appName").focus();
+  }
+  function closeModal(){$("#appModal").classList.remove("show");editingId=null;}
+  function saveApp(event){
+    event.preventDefault();
+    const name=$("#appName").value.trim(),url=normalizeUrl($("#appUrl").value),category=$("#appCategory").value,desc=$("#appDesc").value.trim();
+    if(!name){showToast("نام وب‌سایت را وارد کن.");return;}
+    if(!url){showToast("آدرس واردشده معتبر نیست؛ از HTTP یا HTTPS استفاده کن.");return;}
+    if(editingId){
+      const app=findApp(editingId);if(!app)return;
+      Object.assign(app,{name,url,category,desc,initial:name.slice(0,2).toUpperCase()});
+      showToast("تغییرات ذخیره شد.");
+    }else{
+      state.apps.push({id:"custom-"+Date.now().toString(36),name,url,category,desc,initial:name.slice(0,2).toUpperCase(),favorite:false,custom:true});
+      showToast("وب‌سایت اضافه شد.");
+    }
+    saveState();closeModal();renderAll();showView("appsView");
+  }
+  function handleCardAction(event){
+    const button=event.target.closest("[data-action]");if(!button)return;
+    const {action,id}=button.dataset,app=findApp(id);if(!app)return;
+    if(action==="open")openApp(app);
+    if(action==="favorite")toggleFavorite(id);
+    if(action==="delete")deleteApp(id);
+    if(action==="edit")openModal(app);
+  }
+  function search(){
+    const q=$("#searchInput").value.trim().toLocaleLowerCase("fa");
+    if(!q){showToast("عبارت جستجو را وارد کن.");return;}
+    const matches=state.apps.filter(a=>(a.name+" "+a.desc+" "+a.url+" "+categoryLabel(a.category)).toLocaleLowerCase("fa").includes(q));
+    showView("appsView");activeCategory="all";renderTabs();renderGrid("#appsGrid",matches,"نتیجه‌ای پیدا نشد.");
+  }
+  function resetApp(){
+    if(!confirm("همه میانبرها و تنظیمات به حالت اولیه برگردند؟"))return;
+    state={apps:DEFAULT_APPS.map(x=>({...x})),history:[],dark:false};
+    saveState();renderAll();showView("homeView");showToast("تنظیمات اولیه بازیابی شد.");
+  }
+  function moveFocus(direction){
+    const items=$$('button:not(:disabled),input:not(:disabled),select:not(:disabled),a[href]').filter(el=>el.offsetParent!==null);
+    if(!items.length)return;
+    const current=document.activeElement;
+    let index=items.indexOf(current);
+    if(index<0){items[0].focus();return;}
+    const cols=window.innerWidth>700?Math.max(1,Math.floor(document.querySelector(".grid")?.clientWidth/199)||1):2;
+    let next=index;
+    if(direction==="next")next=(index+1)%items.length;
+    if(direction==="prev")next=(index-1+items.length)%items.length;
+    if(direction==="down")next=Math.min(items.length-1,index+cols);
+    if(direction==="up")next=Math.max(0,index-cols);
+    items[next].focus();
+    items[next].scrollIntoView({block:"nearest",inline:"nearest"});
+  }
+
+  document.addEventListener("click",event=>{
+    const action=event.target.closest("[data-action]");
+    if(action){handleCardAction(event);return;}
+    const category=event.target.closest("[data-category]");
+    if(category){activeCategory=category.dataset.category;renderApps();return;}
+    const back=event.target.closest("[data-back]");
+    if(back){showView("homeView");return;}
+    const ext=event.target.closest("[data-open-url]");
+    if(ext){openExternal(ext.dataset.openUrl);}
+  });
+  $("#allAppsBtn").addEventListener("click",()=>showView("appsView"));
+  $("#favoritesBtn").addEventListener("click",()=>showView("favoritesView"));
+  $("#settingsQuick").addEventListener("click",()=>showView("settingsView"));
+  $("#themeQuick").addEventListener("click",()=>{state.dark=!state.dark;saveState();applyTheme();});
+  $("#themeToggle").addEventListener("click",()=>{state.dark=!state.dark;saveState();applyTheme();});
+  $("#manageAppsBtn").addEventListener("click",()=>showView("appsView"));
+  $("#addAppBtn").addEventListener("click",()=>openModal());
+  $("#cancelModal").addEventListener("click",closeModal);
+  $("#appForm").addEventListener("submit",saveApp);
+  $("#appModal").addEventListener("click",e=>{if(e.target===$("#appModal"))closeModal();});
+  $("#searchBtn").addEventListener("click",search);
+  $("#searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+  $("#clearHistoryBtn").addEventListener("click",()=>{
+    if(!state.history.length){showToast("تاریخچه خالی است.");return;}
+    if(confirm("تاریخچه وب‌سایت‌های اخیر پاک شود؟")){state.history=[];saveState();renderHome();showToast("تاریخچه پاک شد.");}
+  });
+  $("#resetBtn").addEventListener("click",resetApp);
+  document.addEventListener("keydown",e=>{
+    if($("#appModal").classList.contains("show")){
+      if(e.key==="Escape"){closeModal();e.preventDefault();}
+      return;
+    }
+    if(["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"].includes(e.key)){
+      // Keep native text-cursor movement inside editable fields.
+      if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName))return;
+      e.preventDefault();
+      const map={ArrowRight:"next",ArrowLeft:"prev",ArrowDown:"down",ArrowUp:"up"};
+      moveFocus(map[e.key]);
+    }
+    if(e.key==="Escape"||e.key==="Backspace"){
+      if(!$("#homeView").classList.contains("active")){showView("homeView");e.preventDefault();}
+    }
+  });
+  window.addEventListener("pageshow",()=>{state=loadState();renderAll();});
+  updateClock();setInterval(updateClock,30000);renderAll();
+})();
+</script>
+</body>
+</html>
